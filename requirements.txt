@@ -1,0 +1,5 @@
+aiohttp
+bip_utils
+ergpy
+gql
+python-dotenv
