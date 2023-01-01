@@ -12,6 +12,8 @@ load_dotenv()
 # This will send all holders of comet nft an equal amount of comet based on total_comet_to_send
 # make sure .env is filled out based on .example-env
 
+# Script is good for up to 1000 address. If this limit is exceeded, chained transaction will need to be implemented
+
 # make sure to run comet_holders_data.py to generate a new db with the latest holder info
 
 db_name = "snapshot_2023-01-01_05-49-35" # Make sure to change to correct db name

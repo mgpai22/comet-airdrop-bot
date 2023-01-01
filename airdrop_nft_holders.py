@@ -13,6 +13,8 @@ load_dotenv()
 # Duplicate are NOT excluded
 # make sure .env is filled out based on .example-env
 
+# Script is good for up to 1000 address. If this limit is exceeded, chained transaction will need to be implemented
+
 # make sure to run comet_nft_holders_data.py to generate a new db with the latest holder info
 
 db_name = "snapshot_comet_nft_2023-01-01_06-03-48"  # Make sure to change to correct db name
