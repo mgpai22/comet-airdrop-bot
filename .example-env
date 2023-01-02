@@ -1,3 +1,4 @@
 MNEMONIC=""
 COMET=0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b
 NODE="http://213.239.193.208:9053/"
+API=https://api.ergoplatform.com/
