@@ -12,7 +12,7 @@ load_dotenv()
 start_time = time.time()
 
 # This script retrieves all the holders of comet and the amount they hold and dumps it into a database to further sort
-# This will take around 30 minutes, do not stop it
+# This will take around 10 minutes, do not stop it
 
 comet_token_mainnet = os.getenv("COMET")
 current_datetime_utc = datetime.now(timezone.utc).strftime('%Y-%m-%d_%H-%M-%S')
