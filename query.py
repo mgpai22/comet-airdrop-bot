@@ -1,62 +1,28 @@
-import time
-from gql import Client, gql
-from gql.transport.aiohttp import AIOHTTPTransport
-import SQL_functions
+import asyncio
+import math
+import os
+
+import requests
+from api_holder import main
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-# helps make gql queries to find out token holders, synchronous currently unfortunately
+# helps make rest api queries to find out token holders asynchronously!
 
-def initial_query(db_name, table_name_raw, token_id, url):
-    take = 50
-    skip = 0
-    boxes = []
-    has_more = True
-    transport = AIOHTTPTransport(url=url)
-    client = Client(transport=transport, fetch_schema_from_transport=True)
-    # while True:
-    while has_more:
-        params = {
-            "tokenId": token_id,
-            "spent": False,
-            "take": take,
-            "skip": skip
-        }
-        query_1 = """
-                query Query($tokenId: String, $spent: Boolean, $take: Int, $skip: Int) {
-                  boxes(tokenId: $tokenId, spent: $spent, take: $take, skip: $skip) {
-                    address
-                    boxId
-                    assets {
-                      amount
-                      tokenId
-                    }
-                  }
-                }
-        """
-        query = gql(query_1)
-        while True:
-            try:
-                result = client.execute(query, variable_values=params)
-                break
-            except Exception as e:
-                print(e)
-                time.sleep(5)
-        for x in result['boxes']:
-            # boxes.append(x['address'])
-            address = x['address']
-            boxId = x['boxId']
-            for asset in x['assets']:
-                if asset['tokenId'] == token_id:
-                    comet_amount = asset['amount']
-            # print("address:", address)
-            # print("boxId:", boxId)
-            # print("comet amount:", comet_amount)
-            SQL_functions.write_to_raw_table(db_name, table_name_raw, address, int(comet_amount), boxId)
+def initial_query(db_name, table_name_raw, token_id):
+    api_url = f'{os.getenv("API")}/api/v1/boxes/unspent/byTokenId/{token_id}?limit=1&offset=0'
+    total = int(requests.get(api_url).json()['total'])
+    final_offset = ((math.floor(total / 100)) * 100) + 100
+    offsets = []
 
-        if len(result['boxes']) == 50:
-            skip += take
-            print("boxes queried:", skip)
-        else:
-            has_more = False
-    return boxes
+    print(f'{total} boxes are about to be queried!')
 
+    for offset in range(0, final_offset, 100):
+        offsets.append(offset)
+
+    asyncio.set_event_loop_policy(
+        asyncio.WindowsSelectorEventLoopPolicy())  # only enable if python is running on Windows
+
+    asyncio.run(main(offsets, db_name, table_name_raw))

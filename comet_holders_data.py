@@ -15,11 +15,10 @@ start_time = time.time()
 # This will take around 30 minutes, do not stop it
 
 comet_token_mainnet = os.getenv("COMET")
-url_mainnet = "https://explore.sigmaspace.io/api/graphql"
 current_datetime_utc = datetime.now(timezone.utc).strftime('%Y-%m-%d_%H-%M-%S')
 
 db_name = f'snapshot_{str(current_datetime_utc)}'
-# db_name = "snapshot_2023-01-01_16-42-28"
+# db_name = "snapshot_2023-01-02_23-01-55"
 print("make sure to save this name then change the variable 'db_name''s value to whatever is printed! If you care about going back to see stats!")
 print("In the end the db name matters the most in the airdrop_comet_token_holders.py file")
 print(db_name)
@@ -35,11 +34,11 @@ amount_to_exclude_for_excluded_avg = 10
 least_amount_held = 1000000
 
 
-addresses = query.initial_query(db_name, table_name_raw, comet_token_mainnet, url_mainnet)
+addresses = query.initial_query(db_name, table_name_raw, comet_token_mainnet)
 SQL_functions.sort_raw(db_name, table_name_raw, table_name_raw + "_sorted")
 SQL_functions.sort_and_merge_addresses(db_name, table_name_raw, table_name_sorted_p2pk, True)
 SQL_functions.sort_and_merge_addresses(db_name, table_name_raw, table_name_sorted_script, False)
-holders = SQL_functions.get_token_holders("initial", table_name_sorted_p2pk, least_amount_held)
+holders = SQL_functions.get_token_holders(db_name, table_name_sorted_p2pk, least_amount_held)
 end_time = time.time()
 elapsed_time = end_time - start_time
 
@@ -47,7 +46,7 @@ print(f'Elapsed time: {elapsed_time} seconds')
 
 # Uncomment Below to get status!
 
-# top_raw, top_p2pk, top_script, comet_supply, comet_supply_p2pk, comet_supply_script = SQL_functions.get_token_stats("initial", table_name_raw + "_sorted", table_name_sorted_p2pk, table_name_sorted_script, amount_top_to_get, amount_to_exclude_for_excluded_avg)
+# top_raw, top_p2pk, top_script, comet_supply, comet_supply_p2pk, comet_supply_script = SQL_functions.get_token_stats(db_name, table_name_raw + "_sorted", table_name_sorted_p2pk, table_name_sorted_script, amount_top_to_get, amount_to_exclude_for_excluded_avg)
 
 
 #

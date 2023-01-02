@@ -16,7 +16,7 @@ load_dotenv()
 
 # make sure to run comet_holders_data.py to generate a new db with the latest holder info
 
-db_name = "snapshot_2023-01-01_05-49-35" # Make sure to change to correct db name
+db_name = "snapshot_2023-01-02_23-01-55" # Make sure to change to correct db name
 table_name_sorted_p2pk = "p2pk_sorted" # can edit (not recommended) but be consistent
 least_amount_held = 1000000 # only addresses holding at least this amount will be selected
 total_comet_to_send = 5000

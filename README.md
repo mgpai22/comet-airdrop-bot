@@ -1,10 +1,10 @@
 
 # Comet Airdrop Bot
 
-This bot utilizes GraphQL to extract data on all comet holders and stores it in a local SQLite database. It then sorts this information based on wallet holders and script holders, proceeding to airdrop comet tokens to the wallet holders in a single transaction using [ergpy](https://github.com/mgpai22/ergpy). 
+This bot makes several thousand asynchronous, concurrent REST API requests to extract data on all comet holders and stores it in a local SQLite database. It then sorts this information based on wallet holders and script holders, proceeding to airdrop comet tokens to the wallet holders in a single transaction using [ergpy](https://github.com/mgpai22/ergpy). 
 
 
-Additionally, the bot performs an airdrop of comet tokens to comet NFT holders by making several thousand asynchronous, concurrent REST API requests to locate wallet addresses, which are subsequently stored in a database and airdropped using using [ergpy](https://github.com/mgpai22/ergpy). 
+Additionally, the bot performs an airdrop of comet tokens to comet NFT holders by making asynchronous requests to locate wallet addresses, which are subsequently stored in a database and airdropped using [ergpy](https://github.com/mgpai22/ergpy). 
 
 
 

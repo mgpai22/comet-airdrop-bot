@@ -23,6 +23,17 @@ def write_to_raw_table(db_name, table_name_raw, address, amountComet, boxId):
     connection.close()
 
 
+def write_to_raw_test_table(db_name, table_name_raw, address):
+    connection = sqlite3.connect(r'data/' + f'{db_name}.db')
+    cursor = connection.cursor()
+    command1 = f'CREATE TABLE IF NOT EXISTS {table_name_raw}(address TEXT)'
+    cursor.execute(command1)
+    cursor.execute(f"INSERT INTO {table_name_raw} VALUES (?)",
+                   (address,))
+    connection.commit()
+    connection.close()
+
+
 def write_to_comet_nft_ids_table(db_name, id):
     connection = sqlite3.connect(r'data/' + f'{db_name}.db')
     cursor = connection.cursor()

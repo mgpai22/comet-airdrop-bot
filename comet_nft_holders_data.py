@@ -1,7 +1,7 @@
 import asyncio
 import SQL_functions
 from datetime import datetime, timezone
-from api import main
+from api_nft import main
 import time
 from dotenv import load_dotenv
 
